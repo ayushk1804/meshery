@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "meshery-osm.serviceAccountName" . }}
+  labels:
+{{- include "meshery-osm.labels" . | nindent 4 }}
+roleRef:
+  kind: ClusterRole
+  name: {{ include "meshery-osm.serviceAccountName" . }}
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: {{ include "meshery-osm.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
